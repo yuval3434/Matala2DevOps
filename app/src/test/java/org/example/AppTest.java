@@ -132,4 +132,43 @@ class AppTest {
         assertEquals("Negative number", ex.getMessage());
         assertThrows(IllegalArgumentException.class, () -> App.factorial(Integer.MIN_VALUE));
     }
+
+    // ---------- isPalindrome ----------
+
+    @Test void testIsPalindromeSimple() {
+        assertTrue(App.isPalindrome("racecar"));
+        assertTrue(App.isPalindrome("abba"));
+    }
+
+    @Test void testIsPalindromeFalse() {
+        assertFalse(App.isPalindrome("hello"));
+        assertFalse(App.isPalindrome("ab"));
+    }
+
+    @Test void testIsPalindromeIgnoresCase() {
+        assertTrue(App.isPalindrome("RaceCar"));
+    }
+
+    @Test void testIsPalindromeIgnoresSpacesAndPunctuation() {
+        assertTrue(App.isPalindrome("A man, a plan, a canal: Panama"));
+        assertTrue(App.isPalindrome("No 'x' in Nixon"));
+    }
+
+    @Test void testIsPalindromeWithDigits() {
+        assertTrue(App.isPalindrome("12321"));
+        assertFalse(App.isPalindrome("123"));
+    }
+
+    @Test void testIsPalindromeEmptyAndSingleChar() {
+        assertTrue(App.isPalindrome(""));
+        assertTrue(App.isPalindrome("x"));
+    }
+
+    @Test void testIsPalindromeOnlySymbols() {
+        assertTrue(App.isPalindrome("!?., "));
+    }
+
+    @Test void testIsPalindromeNullThrows() {
+        assertThrows(NullPointerException.class, () -> App.isPalindrome(null));
+    }
 }
