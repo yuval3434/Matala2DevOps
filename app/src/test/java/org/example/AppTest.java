@@ -5,7 +5,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
+import java.util.*;
 class AppTest {
     // ---------- add ----------
 
@@ -170,5 +170,117 @@ class AppTest {
 
     @Test void testIsPalindromeNullThrows() {
         assertThrows(NullPointerException.class, () -> App.isPalindrome(null));
+    }
+@Test void testFibonacciUpToTen() {
+        assertEquals(List.of(0, 1, 1, 2, 3, 5, 8), App.fibonacciUpTo(10));
+    }
+    @Test void testFibonacciUpToZero() {
+        assertEquals(List.of(0), App.fibonacciUpTo(0));
+    }
+    @Test void testFibonacciUpToOne() {
+        assertEquals(List.of(0, 1, 1), App.fibonacciUpTo(1));
+    }
+    @Test void testFibonacciLimitIsInclusive() {
+        List<Integer> result = App.fibonacciUpTo(13);
+        assertEquals(13, result.get(result.size() - 1));
+    }
+    @Test void testFibonacciNegativeThrows() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> App.fibonacciUpTo(-1));
+        assertEquals("Negative input", ex.getMessage());
+    }
+
+    @Test void testCharFrequencyBasic() {
+        Map<Character, Integer> freq = App.charFrequency("aab");
+        assertEquals(2, freq.size());
+        assertEquals(2, freq.get('a'));
+        assertEquals(1, freq.get('b'));
+    }
+    @Test void testCharFrequencyEmptyString() {
+        assertTrue(App.charFrequency("").isEmpty());
+    }
+    @Test void testCharFrequencyIsCaseSensitive() {
+        Map<Character, Integer> freq = App.charFrequency("aA");
+        assertEquals(1, freq.get('a'));
+        assertEquals(1, freq.get('A'));
+    }
+    @Test void testCharFrequencyCountsSpacesAndSymbols() {
+        Map<Character, Integer> freq = App.charFrequency("a a!");
+        assertEquals(1, freq.get(' '));
+        assertEquals(1, freq.get('!'));
+        assertNull(freq.get('z'));
+    }
+    @Test void testCharFrequencyNullThrows() {
+        assertThrows(NullPointerException.class, () -> App.charFrequency(null));
+    }
+
+    @Test void testIsAnagramTrue() {
+        assertTrue(App.isAnagram("listen", "silent"));
+    }
+    @Test void testIsAnagramIgnoresCase() {
+        assertTrue(App.isAnagram("Listen", "SILENT"));
+    }
+    @Test void testIsAnagramIgnoresSpaces() {
+        assertTrue(App.isAnagram("dormitory", "dirty room"));
+    }
+    @Test void testIsAnagramFalse() {
+        assertFalse(App.isAnagram("hello", "world"));
+        assertFalse(App.isAnagram("abc", "abcd"));
+        assertFalse(App.isAnagram("aab", "abb"));
+    }
+    @Test void testIsAnagramEmptyStrings() {
+        assertTrue(App.isAnagram("", ""));
+        assertTrue(App.isAnagram(" ", ""));
+    }
+
+    @Test void testAverageBasic() {
+        assertEquals(2.5, App.average(new int[]{1, 2, 3, 4}), 0.0001);
+    }
+    @Test void testAverageSingleElement() {
+        assertEquals(7.0, App.average(new int[]{7}), 0.0001);
+    }
+    @Test void testAverageNegatives() {
+        assertEquals(-2.0, App.average(new int[]{-1, -2, -3}), 0.0001);
+        assertEquals(0.0, App.average(new int[]{-5, 5}), 0.0001);
+    }
+    @Test void testAverageLargeValuesNoOverflow() {
+        assertEquals(Integer.MAX_VALUE, App.average(new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE}), 0.0001);
+    }
+    @Test void testAverageEmptyThrows() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> App.average(new int[]{}));
+        assertEquals("Empty array", ex.getMessage());
+    }
+
+    @Test void testFilterEvensMixed() {
+        assertEquals(List.of(2, 4), App.filterEvens(List.of(1, 2, 3, 4, 5)));
+    }
+    @Test void testFilterEvensEmptyList() {
+        assertTrue(App.filterEvens(List.of()).isEmpty());
+    }
+    @Test void testFilterEvensNoEvens() {
+        assertTrue(App.filterEvens(List.of(1, 3, 5)).isEmpty());
+    }
+    @Test void testFilterEvensZeroAndNegatives() {
+        assertEquals(List.of(0, -2, -4), App.filterEvens(List.of(0, -1, -2, -3, -4)));
+    }
+    @Test void testFilterEvensKeepsOrderAndDuplicates() {
+        assertIterableEquals(List.of(6, 2, 6), App.filterEvens(List.of(6, 1, 2, 6)));
+    }
+
+    @Test void testMostCommonWordBasic() {
+        assertEquals("apple", App.mostCommonWord("apple banana apple cherry"));
+    }
+    @Test void testMostCommonWordIgnoresCase() {
+        assertEquals("the", App.mostCommonWord("The cat and THE dog and the bird"));
+    }
+    @Test void testMostCommonWordIgnoresPunctuation() {
+        assertEquals("hi", App.mostCommonWord("hi, there! hi."));
+    }
+    @Test void testMostCommonWordSingleWord() {
+        assertEquals("hello", App.mostCommonWord("hello"));
+    }
+    @Test void testMostCommonWordEmptyText() {
+        assertEquals("", App.mostCommonWord(""));
     }
 }
