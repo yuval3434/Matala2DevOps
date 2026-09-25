@@ -33,4 +33,40 @@ class AppTest {
         assertEquals(Integer.MIN_VALUE, App.add(Integer.MAX_VALUE, 1));
         assertEquals(Integer.MAX_VALUE, App.add(Integer.MIN_VALUE, -1));
     }
+
+    // ---------- isPrime ----------
+
+    @Test void testIsPrimeBelowTwo() {
+        assertFalse(App.isPrime(1));
+        assertFalse(App.isPrime(0));
+        assertFalse(App.isPrime(-7));
+        assertFalse(App.isPrime(Integer.MIN_VALUE));
+    }
+
+    @Test void testIsPrimeTwoAndThree() {
+        assertTrue(App.isPrime(2));
+        assertTrue(App.isPrime(3));
+    }
+
+    @Test void testIsPrimeEvenNumbers() {
+        assertFalse(App.isPrime(4));
+        assertFalse(App.isPrime(100));
+    }
+
+    @Test void testIsPrimeSquareOfPrime() {
+        assertFalse(App.isPrime(9));
+        assertFalse(App.isPrime(25));
+        assertFalse(App.isPrime(49));
+    }
+
+    @Test void testIsPrimeOddComposite() {
+        assertFalse(App.isPrime(15));
+        assertFalse(App.isPrime(91));
+    }
+
+    @Test void testIsPrimeLargerPrimes() {
+        assertTrue(App.isPrime(97));
+        assertTrue(App.isPrime(7919));
+        assertTrue(App.isPrime(Integer.MAX_VALUE));
+    }
 }
