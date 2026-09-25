@@ -7,8 +7,30 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
+    // ---------- add ----------
+
     @Test void testAdd() {
         assertEquals(5, App.add(2, 3));
         assertEquals(-1, App.add(-2, 1));
+    }
+
+    @Test void testAddWithZero() {
+        assertEquals(0, App.add(0, 0));
+        assertEquals(7, App.add(7, 0));
+        assertEquals(7, App.add(0, 7));
+    }
+
+    @Test void testAddNegatives() {
+        assertEquals(-8, App.add(-3, -5));
+        assertEquals(0, App.add(-4, 4));
+    }
+
+    @Test void testAddIsCommutative() {
+        assertEquals(App.add(12, 30), App.add(30, 12));
+    }
+
+    @Test void testAddOverflowWrapsAround() {
+        assertEquals(Integer.MIN_VALUE, App.add(Integer.MAX_VALUE, 1));
+        assertEquals(Integer.MAX_VALUE, App.add(Integer.MIN_VALUE, -1));
     }
 }
