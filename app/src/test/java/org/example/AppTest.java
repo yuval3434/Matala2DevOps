@@ -69,4 +69,37 @@ class AppTest {
         assertTrue(App.isPrime(7919));
         assertTrue(App.isPrime(Integer.MAX_VALUE));
     }
+
+    // ---------- reverse ----------
+
+    @Test void testReverseBasic() {
+        assertEquals("olleh", App.reverse("hello"));
+    }
+
+    @Test void testReverseEmptyString() {
+        assertEquals("", App.reverse(""));
+    }
+
+    @Test void testReverseSingleChar() {
+        assertEquals("a", App.reverse("a"));
+    }
+
+    @Test void testReverseKeepsSpacesAndSymbols() {
+        assertEquals("!c b a", App.reverse("a b c!"));
+        assertEquals("321", App.reverse("123"));
+    }
+
+    @Test void testReverseTwiceGivesOriginal() {
+        String s = "Unit Testing";
+        assertEquals(s, App.reverse(App.reverse(s)));
+    }
+
+    @Test void testReverseReturnsNewString() {
+        String s = "abc";
+        assertNotSame(s, App.reverse(s));
+    }
+
+    @Test void testReverseNullThrows() {
+        assertThrows(NullPointerException.class, () -> App.reverse(null));
+    }
 }
