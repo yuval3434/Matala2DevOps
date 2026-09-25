@@ -102,4 +102,34 @@ class AppTest {
     @Test void testReverseNullThrows() {
         assertThrows(NullPointerException.class, () -> App.reverse(null));
     }
+
+    // ---------- factorial ----------
+
+    @Test void testFactorialZeroAndOne() {
+        assertEquals(1, App.factorial(0));
+        assertEquals(1, App.factorial(1));
+    }
+
+    @Test void testFactorialSmallNumbers() {
+        assertEquals(2, App.factorial(2));
+        assertEquals(6, App.factorial(3));
+        assertEquals(120, App.factorial(5));
+        assertEquals(3628800, App.factorial(10));
+    }
+
+    @Test void testFactorialLargestThatFitsInInt() {
+        assertEquals(479001600, App.factorial(12));
+    }
+
+    @Test void testFactorialOverflowsAfterTwelve() {
+        assertNotEquals(6227020800L, (long) App.factorial(13));
+        assertEquals((int) 6227020800L, App.factorial(13));
+    }
+
+    @Test void testFactorialNegativeThrows() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> App.factorial(-1));
+        assertEquals("Negative number", ex.getMessage());
+        assertThrows(IllegalArgumentException.class, () -> App.factorial(Integer.MIN_VALUE));
+    }
 }
